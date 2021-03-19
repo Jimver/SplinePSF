@@ -64,6 +64,12 @@ jobs:
         WHEEL=$(ls dist)
         echo "::set-output name=wheel_filename::$WHEEL"
 
+    # debug:
+    - uses: actions/upload-artifact@v2
+      with:
+        path: ./python/dist/${{ steps.pip-build.outputs.wheel_filename }}
+
+
     - name: Upload to GitHub release
       if: github.event.release
       uses: actions/upload-release-asset@v1
