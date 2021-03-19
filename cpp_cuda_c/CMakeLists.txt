@@ -11,6 +11,21 @@ find_package(pybind11 REQUIRED)
 find_package(CUDA)
 
 if(CMAKE_CUDA_COMPILER AND NOT CUDA_DISABLED)  # the latter is a user definable variable
+   
+   # debugging
+   if(CMAKE_CUDA_COMPILER)
+      message(WARNING "CMAKE_CUDA_COMPILER set")
+   else()
+      message(WARNING "CMAKE_CUDA_COMPILER not set")
+   endif()
+
+   if(CUDA_DISABLED)
+      message(WARNING "CUDA_DISABLED set")
+   else()
+      message(WARNING "CUDA_DISABLED not set")
+   endif()
+
+
    enable_language(CUDA)
    add_compile_definitions(CUDA_ENABLED)
 
