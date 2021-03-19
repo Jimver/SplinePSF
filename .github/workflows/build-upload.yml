@@ -61,6 +61,9 @@ jobs:
         echo $CUDACXX
         which nvcc
 
+        export CUDACXX=`which nvcc`
+        echo $CUDACXX
+
         cd ./python
         pip install wheel
         python setup.py bdist_wheel
