@@ -64,6 +64,9 @@ jobs:
         export CUDACXX=`which nvcc`
         echo $CUDACXX
 
+        export CMAKE_CUDA_COMPILER=`which nvcc`
+        echo $CMAKE_CUDA_COMPILER
+
         cd ./python
         pip install wheel
         python setup.py bdist_wheel
