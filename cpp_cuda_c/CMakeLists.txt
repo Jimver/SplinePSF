@@ -11,6 +11,9 @@ find_package(pybind11 REQUIRED)
 find_package(CUDA)
 
 # debugging
+message(STATUS "CMAKE_CUDA_COMPILER = ${CMAKE_CUDA_COMPILER}")
+message(STATUS "CUDA_DISABLED = ${CUDA_DISABLED}")
+
 if(CMAKE_CUDA_COMPILER)
    message(WARNING "CMAKE_CUDA_COMPILER set")
 else()

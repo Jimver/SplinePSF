@@ -51,6 +51,8 @@ class CMakeBuild(build_ext):
         cmake_args += ['-DCMAKE_LIBRARY_OUTPUT_DIRECTORY=' + extdir]
         cmake_args += [f'-DPYBIND11_PYTHON_VERSION={py_ver}']
         cmake_args += ["-GNinja"]
+        cmake_args += ["-DCMAKE_CUDA_COMPILER=" + env["CUDACXX"]]
+
 
         env['CXXFLAGS'] = '{} -DVERSION_INFO=\\"{}\\"'.format(env.get('CXXFLAGS', ''),
                                                               self.distribution.get_version())
