@@ -55,7 +55,7 @@ jobs:
         uses: Jimver/cuda-toolkit@v0.1.0
         id: cuda-toolkit
         with:
-          cuda: '11.2.2'
+          cuda: '10.2'
 
       - name: WHERE IS NVCC?
         if: ${{ matrix.os_base == 'windows'}}
