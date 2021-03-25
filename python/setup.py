@@ -44,7 +44,7 @@ class CMakeBuild(build_ext):
             py_ver = sys.version[:3]
 
         extdir = os.path.abspath(os.path.dirname(self.get_ext_fullpath(ext.name)))
-        # self.debug = True
+
         cfg = 'Debug' if self.debug else 'Release'
         build_args = ['--config', cfg]
         cmake_args = ['-DCMAKE_BUILD_TYPE=' + cfg]
@@ -66,7 +66,7 @@ class CMakeBuild(build_ext):
 
 setup(
     name='spline',
-    version='0.10.0.rc.2',
+    version='0.10.0dev1',
     packages=setuptools.find_packages(),
     ext_modules=[CMakeExtension('spline', '../cpp_cuda_c')],
     cmdclass=dict(build_ext=CMakeBuild),
