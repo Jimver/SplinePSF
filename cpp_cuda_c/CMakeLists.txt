@@ -1,16 +1,13 @@
 cmake_minimum_required(VERSION 3.15 FATAL_ERROR)
 #cmake_policy(SET CMP0094 NEW)
 
-project(SplinePSF LANGUAGES CXX C)
-
-include(CheckLanguage)
-check_language(CUDA)
+project(SplinePSF LANGUAGES CUDA CXX C)
 
 find_package(Python COMPONENTS Interpreter Development)
 find_package(pybind11 REQUIRED)
-find_package(CUDA)
+find_package(CUDAToolkit)
 
-if(CMAKE_CUDA_COMPILER AND NOT CUDA_DISABLED)  # the latter is a user definable variable
+if(CUDAToolkit_FOUND AND NOT CUDA_DISABLED)  # the latter is a user definable variable
    enable_language(CUDA)
    add_compile_definitions(CUDA_ENABLED)
 
@@ -28,14 +25,14 @@ target_include_directories(spline_psf_cpu_impl PUBLIC include)
 target_compile_features(spline_psf_cpu_impl PUBLIC c_std_99)
 set_property(TARGET spline_psf_cpu_impl PROPERTY POSITION_INDEPENDENT_CODE ON)
 
-if(CMAKE_CUDA_COMPILER AND NOT CUDA_DISABLED)
+if(CUDAToolkit_FOUND AND NOT CUDA_DISABLED)
    add_library(spline_psf_cu_impl STATIC src/spline_psf_gpu.cu)
    target_include_directories(spline_psf_cu_impl PUBLIC include)
    target_compile_features(spline_psf_cu_impl PUBLIC cxx_std_11)
    set_target_properties(spline_psf_cu_impl PROPERTIES CUDA_SEPARABLE_COMPILATION ON POSITION_INDEPENDENT_CODE ON)
 
-   link_directories(/usr/local/cuda/lib64)
-   include_directories("${CUDA_INCLUDE_DIRS}")
+   # link_directories(/usr/local/cuda/lib64)
+   # include_directories("${CUDA_INCLUDE_DIRS}")
 
    pybind11_add_module(spline src/pybind_spline.cpp)
    target_link_libraries(spline PRIVATE spline_psf_cu_impl spline_psf_cpu_impl)
